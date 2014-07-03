@@ -1,0 +1,388 @@
+--- src/main/scala/D3/d3.scala	2014-07-03 13:59:52.000000000 -0700
++++ ../scala-js-ts-importer/d3.original.scala	2014-07-03 14:34:04.000000000 -0700
+@@ -1,11 +1,10 @@
+ 
+-
+-package D3 {
+-
+ import scala.scalajs.js
+ import js.annotation._
+-import org.scalajs.dom._
+-import js._
++
++package importedjs {
++
++package D3 {
+ 
+ trait Selectors extends js.Object {
+   def select(selector: js.String): Selection = ???
+@@ -29,8 +28,7 @@
+   var `type`: js.String = ???
+ }
+ 
+-@JSName("d3")
+-object Base extends Selectors {
++trait Base extends Selectors {
+   var behavior: Behavior.Behavior = ???
+   var event: Event = ???
+   def ascending[T](a: T, b: T): js.Number = ???
+@@ -61,15 +59,15 @@
+   def values(map: js.Array[js.Any]): js.Array[js.Any] = ???
+   def entries(map: js.Any): js.Array[js.Any] = ???
+   def merge(map: js.Any*): js.Array[js.Any] = ???
+-  def range(stop: js.Number, step: js.Number): js.Array[js.Number] = ???
++  def range(stop: js.Number, step: js.Number = ???): js.Array[js.Number] = ???
+   def range(start: js.Number, stop: js.Number = ???, step: js.Number = ???): js.Array[js.Number] = ???
+   def nest(): Nest = ???
+-  def xhr(url: js.String, callback: js.Function1[XMLHttpRequest, Unit]): Xhr = ???
++  def xhr(url: js.String, callback: js.Function1[XMLHttpRequest, Unit] = ???): Xhr = ???
+   def xhr(url: js.String, mime: js.String, callback: js.Function1[XMLHttpRequest, Unit] = ???): Xhr = ???
+-  def text(url: js.String, callback: js.Function1[js.String, Unit]): Xhr = ???
++  def text(url: js.String, callback: js.Function1[js.String, Unit] = ???): Xhr = ???
+   def text(url: js.String, mime: js.String, callback: js.Function1[js.String, Unit] = ???): Xhr = ???
+-  def json(url: js.String, callback: js.Function2[js.Any, js.Any, Unit]): Xhr = ???
+-  def xml(url: js.String, callback: js.Function1[Document, Unit]): Xhr = ???
++  var json: js.Function2[js.String, js.Function2[js.Any, js.Any, Unit], Xhr] = ???
++  def xml(url: js.String, callback: js.Function1[Document, Unit] = ???): Xhr = ???
+   def xml(url: js.String, mime: js.String, callback: js.Function1[Document, Unit] = ???): Xhr = ???
+   var html: js.Function2[js.String, js.Function1[DocumentFragment, Unit], Xhr] = ???
+   var csv: Dsv = ???
+@@ -97,8 +95,6 @@
+   def selection(): Selection = ???
+   var ns: js.Any = ???
+   var ease: js.Function = ???
+-
+-
+   def rgb(r: js.Number, g: js.Number, b: js.Number): D3.Color.RGBColor = ???
+   def rgb(color: js.String): D3.Color.RGBColor = ???
+   def hcl(h: js.Number, c: js.Number, l: js.Number): Color.HCLColor = ???
+@@ -145,72 +141,65 @@
+   def response(): js.Function1[XMLHttpRequest, Any] = ???
+   def response(value: js.Function1[XMLHttpRequest, Any]): Xhr = ???
+   def get(callback: js.Function1[XMLHttpRequest, Unit] = ???): Xhr = ???
+-  def post(callback: js.Function1[XMLHttpRequest, Unit]): Xhr = ???
++  def post(callback: js.Function1[XMLHttpRequest, Unit] = ???): Xhr = ???
+   def post(data: js.Any, callback: js.Function1[XMLHttpRequest, Unit] = ???): Xhr = ???
+-  def send(method: js.String, callback: js.Function1[XMLHttpRequest, Unit]): Xhr = ???
++  def send(method: js.String, callback: js.Function1[XMLHttpRequest, Unit] = ???): Xhr = ???
+   def send(method: js.String, data: js.Any, callback: js.Function1[XMLHttpRequest, Unit] = ???): Xhr = ???
+   def abort(): Xhr = ???
+   var on: js.Function2[js.String, js.Function2[js.Any, js.Number, Any], Xhr] = ???
+ }
+ 
+ trait Dsv extends js.Object {
+-  def apply[A <: js.Object](url: js.String, callback: js.Function2[js.Any, js.Array[A], Unit] = ???): Xhr = ???
++  def apply(url: js.String, callback: js.Function2[js.Any, js.Array[js.Any], Unit] = ???): Xhr = ???
+   def parse(string: js.String): js.Array[js.Any] = ???
+   def parseRows(string: js.String, accessor: js.Function2[js.Array[js.Any], js.Number, Any]): js.Dynamic = ???
+   def format(rows: js.Array[js.Any]): js.String = ???
+ }
+ 
+-//trait Selection extends Selectors with js.Array[js.Any] {
+-trait Selection extends js.Array[js.Any] with Selectors {
++trait Selection extends Selectors with js.Array[js.Any] {
+   def attr(name: js.String): js.String = ???
+   def attr(name: js.String, value: js.Any): Selection = ???
+-  def attr[A <: Any](name: js.String, valueFunction: js.Function2[A, js.Number, Any]): Selection = ???
++  def attr(name: js.String, valueFunction: js.Function2[js.Any, js.Number, Any]): Selection = ???
+   def attr(attrValueMap: Object): Selection = ???
+   def classed(name: js.String): js.String = ???
+   def classed(name: js.String, value: js.Any): Selection = ???
+   def classed(name: js.String, valueFunction: js.Function2[js.Any, js.Number, Any]): Selection = ???
+   def style(name: js.String): js.String = ???
+-  def style(name: js.String, value: js.Any, priority: js.String): Selection = ???
+-  def style[A <: js.Object](name: js.String, valueFunction: Function2[A, js.Number, js.Dynamic], priority: js.String = ???): Selection = ???
++  def style(name: js.String, value: js.Any, priority: js.String = ???): Selection = ???
++  def style(name: js.String, valueFunction: js.Function2[js.Any, js.Number, Any], priority: js.String = ???): Selection = ???
+   def style(styleValueMap: Object): Selection = ???
+   def property(name: js.String): Unit = ???
+   def property(name: js.String, value: js.Any): Selection = ???
+   def property(name: js.String, valueFunction: js.Function2[js.Any, js.Number, Any]): Selection = ???
+   def property(propertyValueMap: Object): Selection = ???
+   def text(): js.String = ???
+-  def text(value: js.String): Selection = ???
+-  def text[A <: js.Any](valueFunction: js.Function2[A, js.Number, js.String]): Selection = ???
++  def text(value: js.Any): Selection = ???
++  def text(valueFunction: js.Function2[js.Any, js.Number, Any]): Selection = ???
+   def html(): js.String = ???
+   def html(value: js.Any): Selection = ???
+   def html(valueFunction: js.Function2[js.Any, js.Number, Any]): Selection = ???
+-  def append(el: String): Selection = ???
+-
+-  def insert(el: String, s: String): Selection = ???
++  var append: js.Function1[js.String, Selection] = ???
++  var insert: js.Function2[js.String, js.String, Selection] = ???
+   var remove: js.Function0[Selection] = ???
+   var empty: js.Function0[js.Boolean] = ???
+-  def data[A](values: js.Array[A]): UpdateSelection = ???
+-//  def data(values: js.Function2[Int, Int, js.Dynamic]): UpdateSelection = ???
+-  def data[A](values: js.Function2[js.Number, Int, js.Array[Int]]): UpdateSelection = ???
+-//  def data[A <: js.Object, B <: js.Object](values: js.Function2[A, Int, js.Array[B]], key: js.Function2[js.Any, js.Number, Any] = ???): UpdateSelection = ???
++  def data(values: js.Function2[js.Any, js.Number, js.Array[js.Any]], key: js.Function2[js.Any, js.Number, Any] = ???): UpdateSelection = ???
+   def data(): js.Array[js.Any] = ???
+   def datum(values: js.Function2[js.Any, js.Number, Any]): UpdateSelection = ???
+   def datum(): js.Dynamic = ???
+   def filter(filter: js.Function2[js.Any, js.Number, js.Boolean], thisArg: js.Any = ???): UpdateSelection = ???
+   def call(callback: js.Function, args: js.Any*): Selection = ???
+-  def call(f: Layout.Layout): Selection = ???
+-  def call(f: Svg.Axis): Selection = ???
+   def each(eachFunction: js.Function2[js.Any, js.Number, Any]): Selection = ???
+   def on(`type`: js.String): js.Function2[js.Any, js.Number, Any] = ???
+   def on(`type`: js.String, listener: js.Function2[js.Any, js.Number, Any], capture: js.Boolean = ???): Selection = ???
+   def size(): js.Number = ???
+   def transition(): Transition.Transition = ???
+-  def sort[T](comparator: js.Function2[T, T, js.Number]): Selection = ???
++  def sort[T](comparator: js.Function2[T, T, js.Number] = ???): Selection = ???
+   var order: js.Function0[Selection] = ???
+   var node: js.Function0[Element] = ???
+ }
+ 
+ trait EnterSelection extends js.Object {
+-  def append(sel: String): Selection = ???
++  var append: js.Function1[js.String, Selection] = ???
+   var insert: js.Function2[js.String, js.String, Selection] = ???
+   var select: js.Function1[js.String, Selection] = ???
+   var empty: js.Function0[js.Boolean] = ???
+@@ -220,7 +209,7 @@
+ }
+ 
+ trait UpdateSelection extends Selection {
+-  def enter(): EnterSelection = ???
++  var enter: js.Function0[EnterSelection] = ???
+   var update: js.Function0[Selection] = ???
+   var exit: js.Function0[Selection] = ???
+ }
+@@ -231,14 +220,11 @@
+ }
+ 
+ trait Nest extends js.Object {
+-  def key[A <: js.Any](keyFunction: js.Function1[A, js.String]): Nest = ???
+-  def key[A <: js.Any](keyFunction: js.Function2[A, js.Number, js.String]): Nest = ???
++  def key(keyFunction: js.Function2[js.Any, js.Number, js.String]): Nest = ???
+   def sortKeys(comparator: js.Function2[js.Any, js.Any, js.Number]): Nest = ???
+   def sortValues(comparator: js.Function2[js.Any, js.Any, js.Number]): Nest = ???
+-  def rollup[A <: Nest](rollupFunction: js.Function1[A, Any]): Nest = ???
+-  def rollup[A <: Nest](rollupFunction: js.Function2[A, js.Number, Any]): Nest = ???
+-  def map[A <: Any](values: js.Array[A]): js.Dynamic = ???
+-  def map[A <: js.Any](values: js.Function1[A,js.Number]): js.Dynamic = ???
++  def rollup(rollupFunction: js.Function2[js.Any, js.Number, Any]): Nest = ???
++  def map(values: js.Array[js.Any]): js.Dynamic = ???
+   def entries(values: js.Array[js.Any]): js.Array[NestKeyValue] = ???
+ }
+ 
+@@ -277,7 +263,7 @@
+   def attr(name: js.String, valueFunction: js.Function2[js.Any, js.Number, Any]): Transition = ???
+   def attr(attrValueMap: js.Any): Transition = ???
+   def style(name: js.String): js.String = ???
+-  def style(name: js.String, value: js.Any, priority: js.String): Transition = ???
++  def style(name: js.String, value: js.Any, priority: js.String = ???): Transition = ???
+   def style(name: js.String, valueFunction: js.Function2[js.Any, js.Number, Any], priority: js.String = ???): Transition = ???
+   def call(callback: js.Function1[Selection, Unit]): Transition = ???
+   def select(selector: js.String): Transition = ???
+@@ -393,7 +379,7 @@
+   def sort(comparator: js.Function2[js.Any, js.Any, js.Number]): TreeLayout = ???
+   def children(): js.Function1[js.Any, Any] = ???
+   def children(children: js.Function1[js.Any, Any]): TreeLayout = ???
+-  def nodes[A <: D3.Layout.GraphNode](root: A): TreeLayout = ???
++  def nodes(root: GraphNode): TreeLayout = ???
+   def links(nodes: js.Array[GraphNode]): js.Array[GraphLink] = ???
+   def seperation(): js.Function2[GraphNode, GraphNode, js.Number] = ???
+   def seperation(seperation: js.Function2[GraphNode, GraphNode, js.Number]): TreeLayout = ???
+@@ -447,7 +433,7 @@
+   var target: GraphNode = ???
+ }
+ 
+-trait ForceLayout extends js.Function {
++trait ForceLayout extends js.Object {
+   def apply(): ForceLayout = ???
+   def size(): js.Number = ???
+   def size(mysize: js.Array[js.Number]): ForceLayout = ???
+@@ -474,9 +460,9 @@
+   def gravity(number: js.Number): ForceLayout = ???
+   def gravity(accessor: js.Function2[js.Any, js.Number, js.Number]): ForceLayout = ???
+   def links(): js.Array[GraphLink] = ???
+-  def links[A <: D3.Layout.GraphLink](arLinks: js.Array[A]): ForceLayout = ???
+-  def nodes[A](): js.Array[A] = ???
+-  def nodes[A <: D3.Layout.GraphNode](arNodes: js.Array[A]): ForceLayout = ???
++  def links(arLinks: js.Array[GraphLink]): ForceLayout = ???
++  def nodes(): js.Array[GraphNode] = ???
++  def nodes(arNodes: js.Array[GraphNode]): ForceLayout = ???
+   def start(): ForceLayout = ???
+   def resume(): ForceLayout = ???
+   def stop(): ForceLayout = ???
+@@ -605,7 +591,7 @@
+ trait Color extends js.Object {
+   def brighter(k: js.Number): Color = ???
+   def darker(k: js.Number = ???): Color = ???
+-  override def toString(): js.String = ???
++  def toString(): js.String = ???
+ }
+ 
+ trait RGBColor extends Color {
+@@ -685,7 +671,7 @@
+   def tickValues(values: js.Array[js.Any]): Axis = ???
+   def tickSubdivide(count: js.Number): Axis = ???
+   def tickSize(major: js.Number = ???, minor: js.Number = ???, end: js.Number = ???): Axis = ???
+-  def tickFormat[A <: js.Any](formatter: js.Function1[A, js.String]): Axis = ???
++  def tickFormat(formatter: js.Function1[js.Any, js.String]): Axis = ???
+ }
+ 
+ trait Arc extends js.Object {
+@@ -851,9 +837,7 @@
+ 
+ trait Scale extends js.Object {
+   def apply(value: js.Any): js.Dynamic = ???
+-//  def domain(values: js.Array[Double]): Scale = ???
+-//  def domain(values: js.Array[Int]): Scale = ???
+-  def domain[A <: js.Number](values: js.Array[A]): Scale = ???
++  def domain(values: js.Array[js.Any]): Scale = ???
+   def domain(): js.Array[js.Any] = ???
+   def range(values: js.Array[js.Any]): Scale = ???
+   def range(): js.Array[js.Any] = ???
+@@ -864,10 +848,10 @@
+ trait QuantitiveScale extends Scale {
+   def apply(value: js.Number): js.Number = ???
+   def invert(value: js.Number): js.Number = ???
+-  def domain(values: js.Array[js.Number]): QuantitiveScale = ???
+- // override def domain(): js.Array[js.Number] = ???
+-  def range[A <: js.Number](values: js.Array[A]): QuantitiveScale = ???
+- // override def range(): js.Array[js.Number] = ???
++  def domain(values: js.Array[js.Any]): QuantitiveScale = ???
++  def domain(): js.Array[js.Any] = ???
++  def range(values: js.Array[js.Any]): QuantitiveScale = ???
++  def range(): js.Array[js.Any] = ???
+   var rangeRound: js.Function1[js.Array[js.Any], QuantitiveScale] = ???
+   def interpolate(): D3.Transition.Interpolate = ???
+   def interpolate(factory: D3.Transition.Interpolate): QuantitiveScale = ???
+@@ -875,11 +859,11 @@
+   def nice(count: js.Number = ???): QuantitiveScale = ???
+   def ticks(count: js.Number): js.Array[js.Any] = ???
+   def tickFormat(count: js.Number): js.Function1[js.Number, js.String] = ???
+-  override def copy(): QuantitiveScale = ???
++  def copy(): QuantitiveScale = ???
+ }
+ 
+ trait LinearScale extends QuantitiveScale {
+-  override def apply(value: js.Number): js.Number = ???
++  def apply(value: js.Number): js.Number = ???
+ }
+ 
+ trait IdentityScale extends Scale {
+@@ -890,66 +874,66 @@
+ }
+ 
+ trait SqrtScale extends QuantitiveScale {
+-  override def apply(value: js.Number): js.Number = ???
++  def apply(value: js.Number): js.Number = ???
+ }
+ 
+ trait PowScale extends QuantitiveScale {
+-  override def apply(value: js.Number): js.Number = ???
++  def apply(value: js.Number): js.Number = ???
+ }
+ 
+ trait LogScale extends QuantitiveScale {
+-  override def apply(value: js.Number): js.Number = ???
++  def apply(value: js.Number): js.Number = ???
+ }
+ 
+ trait OrdinalScale extends Scale {
+-  override def apply(value: js.Any): js.Dynamic = ???
++  def apply(value: js.Any): js.Dynamic = ???
+   def domain(values: js.Array[js.Any]): OrdinalScale = ???
+-  override def domain(): js.Array[js.Any] = ???
+-  override def range(values: js.Array[js.Any]): OrdinalScale = ???
+-  override def range(): js.Array[js.Any] = ???
++  def domain(): js.Array[js.Any] = ???
++  def range(values: js.Array[js.Any]): OrdinalScale = ???
++  def range(): js.Array[js.Any] = ???
+   def rangePoints(interval: js.Array[js.Any], padding: js.Number = ???): OrdinalScale = ???
+   def rangeBands(interval: js.Array[js.Any], padding: js.Number = ???, outerPadding: js.Number = ???): OrdinalScale = ???
+   def rangeRoundBands(interval: js.Array[js.Any], padding: js.Number = ???, outerPadding: js.Number = ???): OrdinalScale = ???
+   def rangeBand(): js.Number = ???
+   def rangeExtent(): js.Array[js.Any] = ???
+-  override def copy(): OrdinalScale = ???
++  def copy(): OrdinalScale = ???
+ }
+ 
+ trait QuantizeScale extends Scale {
+-  override def apply(value: js.Any): js.Dynamic = ???
++  def apply(value: js.Any): js.Dynamic = ???
+   def domain(values: js.Array[js.Number]): QuantizeScale = ???
+-  override def domain(): js.Array[js.Any] = ???
+-  override def range(values: js.Array[js.Any]): QuantizeScale = ???
+-  override def range(): js.Array[js.Any] = ???
+-  override def copy(): QuantizeScale = ???
++  def domain(): js.Array[js.Any] = ???
++  def range(values: js.Array[js.Any]): QuantizeScale = ???
++  def range(): js.Array[js.Any] = ???
++  def copy(): QuantizeScale = ???
+ }
+ 
+ trait ThresholdScale extends Scale {
+-  override def apply(value: js.Any): js.Dynamic = ???
++  def apply(value: js.Any): js.Dynamic = ???
+   def domain(values: js.Array[js.Number]): ThresholdScale = ???
+-  override def domain(): js.Array[js.Any] = ???
+-  override def range(values: js.Array[js.Any]): ThresholdScale = ???
+-  override def range(): js.Array[js.Any] = ???
+-  override def copy(): ThresholdScale = ???
++  def domain(): js.Array[js.Any] = ???
++  def range(values: js.Array[js.Any]): ThresholdScale = ???
++  def range(): js.Array[js.Any] = ???
++  def copy(): ThresholdScale = ???
+ }
+ 
+ trait QuantileScale extends Scale {
+-  override def apply(value: js.Any): js.Dynamic = ???
++  def apply(value: js.Any): js.Dynamic = ???
+   def domain(values: js.Array[js.Number]): QuantileScale = ???
+-  override def domain(): js.Array[js.Any] = ???
+-  override def range(values: js.Array[js.Any]): QuantileScale = ???
+-  override def range(): js.Array[js.Any] = ???
++  def domain(): js.Array[js.Any] = ???
++  def range(values: js.Array[js.Any]): QuantileScale = ???
++  def range(): js.Array[js.Any] = ???
+   def quantiles(): js.Array[js.Any] = ???
+-  override def copy(): QuantileScale = ???
++  def copy(): QuantileScale = ???
+ }
+ 
+ trait TimeScale extends Scale {
+   def apply(value: Date): js.Number = ???
+   def invert(value: js.Number): Date = ???
+   def domain(values: js.Array[js.Any]): TimeScale = ???
+-  override def domain(): js.Array[js.Any] = ???
+-  override def range(values: js.Array[js.Any]): TimeScale = ???
+-  override def range(): js.Array[js.Any] = ???
++  def domain(): js.Array[js.Any] = ???
++  def range(values: js.Array[js.Any]): TimeScale = ???
++  def range(): js.Array[js.Any] = ???
+   var rangeRound: js.Function1[js.Array[js.Any], TimeScale] = ???
+   def interpolate(): D3.Transition.Interpolate = ???
+   def interpolate(factory: D3.Transition.InterpolateFactory): TimeScale = ???
+@@ -957,7 +941,7 @@
+   def ticks(count: js.Number): js.Array[js.Any] = ???
+   def ticks(range: D3.Time.Range, count: js.Number): js.Array[js.Any] = ???
+   def tickFormat(count: js.Number): js.Function1[js.Number, js.String] = ???
+-  override def copy(): TimeScale = ???
++  def copy(): TimeScale = ???
+ }
+ 
+ }
+@@ -1213,12 +1197,10 @@
+ 
+ }
+ 
+-
+-package object D3Obj {
+-  val d3 = D3.Base
+ }
+ 
+-
+ }
+ 
+-
++package object importedjs extends js.GlobalScope {
++  var d3: D3.Base = ???
++}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scala.js to D3.js binding test</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+
+        .node {
+            stroke: #fff;
+            stroke-width: 1.5px;
+        }
+
+        .link {
+            stroke: #999;
+            stroke-opacity: .6;
+        }
+
+
+        svg {
+            font: 10px sans-serif;
+        }
+
+        .y.axis path {
+            display: none;
+        }
+
+        .y.axis line {
+            stroke: #fff;
+            stroke-opacity: .2;
+            shape-rendering: crispEdges;
+        }
+
+        .y.axis .zero line {
+            stroke: #000;
+            stroke-opacity: 1;
+        }
+
+        .title {
+            font: 300 78px Helvetica Neue;
+            fill: #666;
+        }
+
+        .birthyear,
+        .age {
+            text-anchor: middle;
+        }
+
+        .birthyear {
+            fill: #fff;
+        }
+
+        rect {
+            fill-opacity: .6;
+            fill: #e377c2;
+        }
+
+        rect:first-child {
+            fill: #1f77b4;
+        }
+
+    </style>
+
+
+</head>
+<body>
+<h2>Force directed graph</h2>
+<p>Adapted from <a href='http://bl.ocks.org/mbostock/4062045'>http://bl.ocks.org/mbostock/4062045</a></p>
+<p>and <a href='http://bl.ocks.org/mbostock/4062085'>http://bl.ocks.org/mbostock/4062085</a></p>
+
+<script type="text/javascript" src='http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.9/d3.js'></script>
+
+<script type="text/javascript" src="./target/scala-2.11/example-fastopt.js"></script>
+<script type="text/javascript" src="./target/scala-2.11/example-launcher.js"></script>
+
+</body>
+</html>
