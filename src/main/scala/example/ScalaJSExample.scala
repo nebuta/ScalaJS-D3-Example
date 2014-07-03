@@ -65,8 +65,8 @@ object D3DrawingExamples extends js.JSApp {
         .enter().append("line")
         .attr("class", "link")
         .style("stroke-width",(d: LinkData, i: js.Number) => {
-          val w = scala.math.sqrt(d.value)
-          w.asInstanceOf[js.Dynamic]
+        val w = scala.math.sqrt(d.value)
+        w.asInstanceOf[js.Dynamic]
       })
 
       dom.console.log("Link made")
@@ -78,7 +78,7 @@ object D3DrawingExamples extends js.JSApp {
         .attr("class", "node")
         .attr("r", 5)
         .style("fill", (d: NodeData, i: js.Number) => {
-          color(d.group)
+        color(d.group)
       })
         .call(force.drag())
 
