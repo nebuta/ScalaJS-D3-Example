@@ -2,7 +2,7 @@ package example
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
-import D3.Nest
+import D3.{D3Obj, Nest}
 import org.scalajs.dom
 
 // Ported from http://bl.ocks.org/mbostock/4062085
@@ -10,8 +10,8 @@ import org.scalajs.dom
 @JSExport
 object Graph2 {
 
-  val d3 = D3.D3Obj.d3
   def draw() {
+    val d3 = D3Obj.d3
 
     case class Margin(top: Double, right: Double, bottom: Double, left: Double)
 

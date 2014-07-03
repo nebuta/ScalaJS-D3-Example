@@ -8,12 +8,10 @@ object ScalaJSExampleTest extends JasmineTest {
 
   describe("ScalaJSExample") {
 
-    it("should implement square()") {
-      import ScalaJSExample._
-
-      expect(square(0)).toBe(0)
-      expect(square(4)).toBe(16)
-      expect(square(-5)).toBe(25)
+    it("should draw svg") {
+      import example._
+//      D3DrawingExamples.graph1()
+//      Graph2.draw()
     }
   }
 }

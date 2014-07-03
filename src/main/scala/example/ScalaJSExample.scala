@@ -31,10 +31,10 @@ object D3DrawingExamples extends js.JSApp {
     Graph2.draw()
   }
 
-  val d3 = D3Obj.d3
 
   // Adapted from http://bl.ocks.org/mbostock/4062045
   def graph1() {
+    val d3 = D3Obj.d3
     val color: D3.Scale.OrdinalScale = d3.scale.category20()
 
     val width: js.Number = 960
