@@ -29,6 +29,8 @@ object D3DrawingExamples extends js.JSApp {
   def main(): Unit = {
     graph1()
     Graph2.draw()
+//    Graph3.draw()
+    Graph4.draw()
   }
 
 

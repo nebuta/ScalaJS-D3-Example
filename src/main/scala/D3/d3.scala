@@ -265,6 +265,7 @@ trait Random extends js.Object {
   def normal(mean: js.Number = ???, deviation: js.Number = ???): js.Function0[js.Number] = ???
   def logNormal(mean: js.Number = ???, deviation: js.Number = ???): js.Function0[js.Number] = ???
   def irwinHall(count: js.Number): js.Function0[js.Number] = ???
+  def bates(mean: Double): js.Function0[js.Number] = ???
 }
 
 package Transition {
@@ -538,13 +539,14 @@ trait Bin extends js.Array[js.Any] {
 }
 
 trait HistogramLayout extends js.Object {
-  def apply(values: js.Array[js.Any], index: js.Number = ???): js.Array[Bin] = ???
+  def apply(values: js.Array[js.Number], index: js.Number = ???): js.Array[Bin] = ???
   def value(): js.Function1[js.Any, Any] = ???
   def value(accessor: js.Function1[js.Any, Any]): HistogramLayout = ???
   def range(): js.Function2[js.Any, js.Number, js.Array[js.Number]] = ???
   def range(range: js.Function2[js.Any, js.Number, js.Array[js.Number]]): HistogramLayout = ???
   def bins(): js.Function2[js.Array[js.Any], js.Number, js.Array[js.Number]] = ???
   def bins(bins: js.Function2[js.Array[js.Any], js.Number, js.Array[js.Number]]): HistogramLayout = ???
+  def bins(threshold: js.Array[Double]): HistogramLayout = ???
   def frequency(): js.Boolean = ???
   def frequency(frequency: js.Boolean): HistogramLayout = ???
 }
@@ -645,11 +647,25 @@ trait Svg extends js.Object {
   def axis(): Axis = ???
   def arc(): Arc = ???
   var line: js.Any = ???
-  var area: js.Any = ???
+  def area(): AreaFunc = ???
   def brush(): Brush = ???
   def chord(): Chord = ???
   var diagonal: js.Any = ???
   var symbolTypes: js.Array[js.String] = ???
+}
+
+trait AreaObject extends js.Object {
+  var x: Double = ???
+  var y0: Double = ???
+  var y: Double = ???
+  var y1: Double = ???
+}
+
+trait AreaFunc extends js.Object {
+  def apply(dat: js.Any): String = ???
+  def x(a: AreaObject => Double): AreaFunc = ???
+  def y0(a: AreaObject => Double): AreaFunc = ???
+  def y1(a: AreaObject => Double): AreaFunc = ???
 }
 
 trait Symbol extends js.Object {
@@ -873,7 +889,7 @@ trait QuantitiveScale extends Scale {
   def interpolate(factory: D3.Transition.Interpolate): QuantitiveScale = ???
   def clamp(clamp: js.Boolean): QuantitiveScale = ???
   def nice(count: js.Number = ???): QuantitiveScale = ???
-  def ticks(count: js.Number): js.Array[js.Any] = ???
+  def ticks(count: js.Number): js.Array[Double] = ???
   def tickFormat(count: js.Number): js.Function1[js.Number, js.String] = ???
   override def copy(): QuantitiveScale = ???
 }
@@ -905,7 +921,7 @@ trait OrdinalScale extends Scale {
   override def apply(value: js.Any): js.Dynamic = ???
   def domain(values: js.Array[js.Any]): OrdinalScale = ???
   override def domain(): js.Array[js.Any] = ???
-  override def range(values: js.Array[js.Any]): OrdinalScale = ???
+  def range[A <: js.Any](values: js.Array[A]): OrdinalScale = ???
   override def range(): js.Array[js.Any] = ???
   def rangePoints(interval: js.Array[js.Any], padding: js.Number = ???): OrdinalScale = ???
   def rangeBands(interval: js.Array[js.Any], padding: js.Number = ???, outerPadding: js.Number = ???): OrdinalScale = ???
@@ -919,7 +935,7 @@ trait QuantizeScale extends Scale {
   override def apply(value: js.Any): js.Dynamic = ???
   def domain(values: js.Array[js.Number]): QuantizeScale = ???
   override def domain(): js.Array[js.Any] = ???
-  override def range(values: js.Array[js.Any]): QuantizeScale = ???
+  def range[A <: js.Any](values: js.Array[A]): QuantizeScale = ???
   override def range(): js.Array[js.Any] = ???
   override def copy(): QuantizeScale = ???
 }
@@ -928,7 +944,7 @@ trait ThresholdScale extends Scale {
   override def apply(value: js.Any): js.Dynamic = ???
   def domain(values: js.Array[js.Number]): ThresholdScale = ???
   override def domain(): js.Array[js.Any] = ???
-  override def range(values: js.Array[js.Any]): ThresholdScale = ???
+  def range[A <: js.Any](values: js.Array[A]): ThresholdScale = ???
   override def range(): js.Array[js.Any] = ???
   override def copy(): ThresholdScale = ???
 }
@@ -937,7 +953,7 @@ trait QuantileScale extends Scale {
   override def apply(value: js.Any): js.Dynamic = ???
   def domain(values: js.Array[js.Number]): QuantileScale = ???
   override def domain(): js.Array[js.Any] = ???
-  override def range(values: js.Array[js.Any]): QuantileScale = ???
+  def range[A <: js.Any](values: js.Array[A]): QuantileScale = ???
   override def range(): js.Array[js.Any] = ???
   def quantiles(): js.Array[js.Any] = ???
   override def copy(): QuantileScale = ???
@@ -948,7 +964,7 @@ trait TimeScale extends Scale {
   def invert(value: js.Number): Date = ???
   def domain(values: js.Array[js.Any]): TimeScale = ???
   override def domain(): js.Array[js.Any] = ???
-  override def range(values: js.Array[js.Any]): TimeScale = ???
+  def range[A <: js.Any](values: js.Array[A]): QuantileScale = ???
   override def range(): js.Array[js.Any] = ???
   var rangeRound: js.Function1[js.Array[js.Any], TimeScale] = ???
   def interpolate(): D3.Transition.Interpolate = ???
