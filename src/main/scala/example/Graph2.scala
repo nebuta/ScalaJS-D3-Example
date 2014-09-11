@@ -52,13 +52,6 @@ object Graph2 {
       .attr("dy", ".71em")
       .text(2000.toString)
 
-    class Population extends js.Object {
-      var people: String = ???
-      var year: String = ???
-      var age: String = ???
-      var sex: String = ???
-    }
-
     case class Population2(val people: Int, val year: Int, val age: Int, val sex: Int)
 
     d3.csv("population.csv", (error: js.Any, dataOriginal: js.Array[Population]) => {
@@ -186,10 +179,14 @@ object Graph2 {
       }
       ()
     })
-
-
-
   }
+}
+
+class Population extends js.Object {
+   var people: String = ???
+   var year: String = ???
+   var age: String = ???
+   var sex: String = ???
 }
 
 // http://bl.ocks.org/mbostock/4060954
@@ -327,11 +324,6 @@ object Graph4 {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-    trait XYObject extends js.Object {
-      var x: Double = ???
-      var y: Double = ???
-    }
-
     val bar = svg.selectAll(".bar")
       .data(js.Array(data :_*))
       .enter().append("g")
@@ -357,3 +349,9 @@ object Graph4 {
 
   }
 }
+
+trait XYObject extends js.Object {
+  var x: Double = ???
+  var y: Double = ???
+}
+
