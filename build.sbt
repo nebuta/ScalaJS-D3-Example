@@ -1,5 +1,5 @@
 // Turn this project into a Scala.js project by importing these settings
-scalaJSSettings
+enablePlugins(ScalaJSPlugin)
 
 name := "Example"
 
@@ -7,13 +7,19 @@ version := "0.1-SNAPSHOT"
 
 scalaVersion := "2.11.1"
 
-ScalaJSKeys.persistLauncher := true
+persistLauncher := true
 
-ScalaJSKeys.persistLauncher in Test := false
+persistLauncher in Test := false
 
 libraryDependencies ++= Seq(
-    "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",
-    "org.scala-lang.modules.scalajs" %% "scalajs-jasmine-test-framework" % scalaJSVersion % "test",
-    "com.scalatags" %%% "scalatags" % "0.3.8",
-    "com.scalarx" %%% "scalarx" % "0.2.5"
+    "org.scala-js" %%% "scalajs-dom" % "0.8.1",
+    "org.scala-lang.modules.scalajs" %% "scalajs-jasmine-test-framework" % "0.5.1" % "test",
+    "com.lihaoyi" %%% "scalatags" % "0.5.3",
+    "com.lihaoyi" %%% "scalarx" % "0.2.8"
 )
+
+// To resolve the no longer supported Jasmine framework
+resolvers += Resolver.url(
+    "bintray-scala-js-releases",
+    url("http://dl.bintray.com/content/scala-js/scala-js-releases"))(
+    Resolver.ivyStylePatterns)

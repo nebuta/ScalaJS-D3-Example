@@ -10,16 +10,16 @@ import D3.Layout.{GraphNode, GraphLink}
 // Otherwise this causes exception like the following.
 // "Uncaught java.lang.ClassCastException: 1 is not an instance of scala.runtime.Nothing$"
 trait LinkData extends GraphLink {
-  var value: Double = ???
+  var value: Double = js.native
 }
 
 trait NodeData extends GraphNode {
-  var group: Int = ???
+  var group: Int = js.native
 }
 
 trait GraphData extends js.Object {
-  var nodes: js.Array[NodeData] = ???
-  var links: js.Array[LinkData] = ???
+  var nodes: js.Array[NodeData] = js.native
+  var links: js.Array[LinkData] = js.native
 }
 
 //Nesting @JSExport annotation may cause EmptyScope.enter error.
@@ -39,14 +39,14 @@ object D3DrawingExamples extends js.JSApp {
     val d3 = D3Obj.d3
     val color: D3.Scale.OrdinalScale = d3.scale.category20()
 
-    val width: js.Number = 960
-    val height: js.Number = 500
+    val width: Double = 960
+    val height: Double = 500
 
 
     val force = d3.layout.force()
       .charge(-120)
       .linkDistance(30)
-      .size(Array(width, height))
+      .size(js.Array(width, height))
 
     val svg = d3.select("body").append("svg")
       .attr("width", width)
@@ -66,7 +66,7 @@ object D3DrawingExamples extends js.JSApp {
         .data(graph.links)
         .enter().append("line")
         .attr("class", "link")
-        .style("stroke-width",(d: LinkData, i: js.Number) => {
+        .style("stroke-width",(d: LinkData, i: Double) => {
         val w = scala.math.sqrt(d.value)
         w.asInstanceOf[js.Dynamic]
       })
@@ -79,7 +79,7 @@ object D3DrawingExamples extends js.JSApp {
         .enter().append("circle")
         .attr("class", "node")
         .attr("r", 5)
-        .style("fill", (d: NodeData, i: js.Number) => {
+        .style("fill", (d: NodeData, i: Double) => {
         color(d.group)
       })
         .call(force.drag())
@@ -87,7 +87,7 @@ object D3DrawingExamples extends js.JSApp {
       dom.console.log("Node made")
 
       node.append("title")
-        .text((a: NodeData, _: js.Number) => a.name)
+        .text((a: NodeData, _: Double) => a.name)
 
       dom.console.log("Title made")
 

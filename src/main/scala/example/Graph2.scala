@@ -2,6 +2,7 @@ package example
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
+import scala.scalajs.js.JSConverters._
 import D3.{D3Obj, Nest}
 import org.scalajs.dom
 import D3.Svg.AreaObject
@@ -12,6 +13,13 @@ import scala.collection.mutable
 
 @JSExport
 object Graph2 {
+
+  class Population extends js.Object {
+    var people: String = js.native
+    var year: String = js.native
+    var age: String = js.native
+    var sex: String = js.native
+  }
 
   def draw() {
     val d3 = D3Obj.d3
@@ -24,10 +32,10 @@ object Graph2 {
     val barWidth = Math.floor(width / 19) - 1
 
     val x = d3.scale.linear()
-      .range(Array(barWidth / 2, width - barWidth / 2))
+      .range(js.Array(barWidth / 2, width - barWidth / 2))
 
     val y = d3.scale.linear()
-      .range(Array(height, 0))
+      .range(js.Array(height, 0))
 
     val yAxis = d3.svg.axis()
       .scale(y)
@@ -52,19 +60,12 @@ object Graph2 {
       .attr("dy", ".71em")
       .text(2000.toString)
 
-    class Population extends js.Object {
-      var people: String = ???
-      var year: String = ???
-      var age: String = ???
-      var sex: String = ???
-    }
-
     case class Population2(val people: Int, val year: Int, val age: Int, val sex: Int)
 
     d3.csv("population.csv", (error: js.Any, dataOriginal: js.Array[Population]) => {
 
       // Convert strings to numbers.
-      val data: Array[Population2] = for(d: Population <- dataOriginal) yield {
+      val data: js.Array[Population2] = for(d: Population <- dataOriginal) yield {
         val people = d.people.toInt
         val year = d.year.toInt
         val age = d.age.toInt
@@ -82,15 +83,15 @@ object Graph2 {
       var year = year1
 
       // Update the scale domains.
-      x.domain(Array(year1 - age1, year1).map(_.toDouble))
-      y.domain(Array(0, d3.max(data, (d: Population2) => d.people)).map(_.toDouble))
+      x.domain(js.Array(year1 - age1, year1).map(_.toDouble))
+      y.domain(js.Array(0, d3.max(data, (d: Population2) => d.people)).map(_.toDouble))
 
 
       // Produce a map from year and birthyear to [male, female].
       import scala.collection.mutable
-      val data2: Map[Int,Map[Int,Array[Population2]]] = {
-        val a: Map[Int,Array[Population2]] = data.groupBy(_.year)
-        val aa: Map[Int,Map[Int,Array[Population2]]] = (for((k,v)<- a) yield {
+      val data2: Map[Int,Map[Int,js.Array[Population2]]] = {
+        val a: Map[Int,js.Array[Population2]] = data.groupBy(_.year)
+        val aa: Map[Int,Map[Int,js.Array[Population2]]] = (for((k,v)<- a) yield {
           (k,v.groupBy(p => p.year - p.age))
         }).toMap
         aa
@@ -108,7 +109,7 @@ object Graph2 {
         .attr("transform", "translate(" + width + ",0)")
         .call(yAxis)
         .selectAll("g")
-        .filter((value: Any, i: js.Number) => value != null)
+        .filter((value: Any, i: Double) => value != null)
         .classed("zero", true)
 
       // Add labeled rects for each birthyear (so that no enter or exit is required).
@@ -119,9 +120,9 @@ object Graph2 {
         .attr("transform", (birthyear: Double) => "translate(" + x(birthyear) + ",0)")
 
       birthyear.selectAll("rect")
-        .data((birthyear: js.Number, i: Int) => {
-        val a: Array[Int] = data2.get(year).flatMap(_.get(birthyear.toInt)).map(_.map(_.people))
-          .getOrElse(Array(0,0))
+        .data((birthyear: Double, i: Int) => {
+        val a: js.Array[Int] = data2.get(year).flatMap(_.get(birthyear.toInt)).map(_.map(_.people))
+          .getOrElse(js.Array(0,0))
 
         //.asInstanceOf[js.Dynamic]
       //  dom.console.log(js.Array(a))
@@ -148,11 +149,11 @@ object Graph2 {
         .attr("x", (age: Int) => x(year - age))
         .attr("y", height + 4)
         .attr("dy", ".71em")
-        .text((age: Int, _: js.Number) => { age.toString })
+        .text((age: Int, _: Double) => { age.toString })
 
       // Allow the arrow keys to change the displayed year.
       dom.window.focus()
-      d3.select(dom.window).on("keydown", (_: js.Any, _: js.Number) => {
+      d3.select(dom.window).on("keydown", (_: js.Any, _: Double) => {
         year = d3.event.keyCode match {
           case 37 => Math.max(year0, year - 10)
           case 39 => Math.min(year1, year + 10)
@@ -172,8 +173,8 @@ object Graph2 {
 
         birthyear.selectAll("rect")
           .data((birthyear: Double, i: Int) => {
-          val a: Array[Int] = data2.get(year).flatMap(_.get(birthyear.toInt)).map(_.map(_.people))
-            .getOrElse(Array(0,0))
+          val a: js.Array[Int] = data2.get(year).flatMap(_.get(birthyear.toInt)).map(_.map(_.people))
+            .getOrElse(js.Array(0,0))
 
           //.asInstanceOf[js.Dynamic]
           dom.console.log(js.Array(a))
@@ -224,8 +225,8 @@ object Graph3 {
     val n = 20 // number of layers
     val m = 200 // number of samples per layer
     val stack = d3.layout.stack().offset("wiggle")
-    val layers0: js.Array[js.Object] = js.Array(stack(Array.range(0,n).map(_ => bumpLayer(m))) :_*)
-    val layers1: js.Array[js.Object] = js.Array(stack(Array.range(0,n).map(_ => bumpLayer(m))) :_*)
+    val layers0: js.Array[js.Object] = js.Array(stack(Array.range(0,n).toJSArray.map(_ => bumpLayer(m))) :_*)
+    val layers1: js.Array[js.Object] = js.Array(stack(Array.range(0,n).toJSArray.map(_ => bumpLayer(m))) :_*)
 
     dom.console.log("Graph3.draw()")
     dom.console.log(layers0,layers1)
@@ -234,8 +235,8 @@ object Graph3 {
     val height = 500.0
 
     val x = d3.scale.linear()
-      .domain(Array(0, m - 1).map(_.toDouble))
-      .range(Array(0.0, width))
+      .domain(js.Array(0, m - 1).map(_.toDouble))
+      .range(js.Array(0.0, width))
 
 //    val mx: Double = Array((layers0++layers1) :_*).map((layer: AreaObject) => {
 //      d.y0 + d.y
@@ -243,11 +244,11 @@ object Graph3 {
 
     val mx = 100
     val y = d3.scale.linear()
-      .domain(Array(0.0, mx))
-      .range(Array(height, 0))
+      .domain(js.Array(0.0, mx))
+      .range(js.Array(height, 0))
 
     val color = d3.scale.linear()
-      .range(Array("#aad", "#556").asInstanceOf[js.Array[js.Any]])
+      .range(js.Array("#aad", "#556").asInstanceOf[js.Array[js.Any]])
 
     val area = d3.svg.area()
       .x(d => x(d.x))
@@ -290,11 +291,16 @@ object Graph4 {
     }
   }
 
+  trait XYObject extends js.Object {
+    var x: Double = js.native
+    var y: Double = js.native
+  }
+
   def size2(sel: D3.Selection, x: Int, y: Int) = {
     sel.attr("width",x).attr("height",y)
   }
   def draw(){
-    val values: js.Array[js.Number] = js.Array((0 until 1000).map(_ => d3.random.bates(10)()) :_*)
+    val values: js.Array[Double] = js.Array((0 until 1000).map(_ => d3.random.bates(10)()) :_*)
 
     // A formatter for counts.
     val formatCount = d3.format(",.0f")
@@ -306,16 +312,16 @@ object Graph4 {
     val height = 500 - margin.top - margin.bottom
 
     val x: D3.Scale.QuantitiveScale = d3.scale.linear()
-      .domain(Array(0d, 1))
-      .range(Array(0d, width))
+      .domain(js.Array(0d, 1))
+      .range(js.Array(0d, width))
 
     // Generate a histogram using twenty uniformly-spaced bins.
     val data: mutable.Seq[D3.Layout.Bin] = d3.layout.histogram()
       .bins(x.ticks(20))(values)
 
     var y = d3.scale.linear()
-      .domain(Array(0d, data.map(_.y).max))
-      .range(Array(height, 0))
+      .domain(js.Array(0d, data.map(_.y).max))
+      .range(js.Array(height, 0))
 
     var xAxis = d3.svg.axis()
       .scale(x)
@@ -326,11 +332,6 @@ object Graph4 {
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-
-    trait XYObject extends js.Object {
-      var x: Double = ???
-      var y: Double = ???
-    }
 
     val bar = svg.selectAll(".bar")
       .data(js.Array(data :_*))
